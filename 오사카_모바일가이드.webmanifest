@@ -1,0 +1,18 @@
+{
+  "name": "오사카 3박4일 모바일 가이드",
+  "short_name": "오사카 가이드",
+  "lang": "ko-KR",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#f5f8fc",
+  "theme_color": "#ffffff",
+  "icons": [
+    {
+      "src": "./오사카_모바일가이드-icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
