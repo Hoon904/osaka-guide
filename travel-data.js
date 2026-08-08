@@ -79,3 +79,15 @@
   const rapid=guide.days["1일차"].stops[2];
   rapid.t="12:35";rapid.compact.summary="난카이 라피트 12:35 출발. 1호차 지정석·QR 전자티켓 이용.";rapid.detail.intro="간사이공항역에서 12:35 난카이 라피트 탑승. 1호차 지정석이며 Trip.com / Linktivity QR 전자티켓은 2명 각각 사용. QR의 Use 버튼은 개찰구 앞에서 활성화.";rapid.detail.primary=["1호차 지정석","QR은 개찰구 앞에서 Use 활성화","2명 각각 별도 QR 전자티켓 사용"];
 })();
+/* Day 3 late-afternoon update: keep Umeda shopping, remove the Sky Building stop. */
+(()=>{
+  const day3=window.TRAVEL_GUIDE?.days?.["3일차"];
+  if(!day3)return;
+  const ebisu={name:"야키니쿠 에비스 우메다점 — 肉と米 焼肉えびす 梅田店",status:"fixed",search:"https://www.google.com/maps/search/?api=1&query=%E8%82%89%E3%81%A8%E7%B1%B3%20%E7%84%BC%E8%82%89%E3%81%88%E3%81%B3%E3%81%99%20%E6%A2%85%E7%94%B0%E5%BA%97",directions:"https://www.google.com/maps/dir/?api=1&destination=%E8%82%89%E3%81%A8%E7%B1%B3%20%E7%84%BC%E8%82%89%E3%81%88%E3%81%B3%E3%81%99%20%E6%A2%85%E7%94%B0%E5%BA%97",note:"VISA · Mastercard · JCB 등 카드 사용 가능. QR결제보다 실물 카드 결제를 우선 권장."};
+  const shopping=day3.stops[6],cafe=day3.stops[8],free=day3.stops[11];
+  shopping.detail.intro="Pokémon Center Osaka → Nintendo OSAKA → LUCUA → Grand Front Osaka 순서로 우메다 실내 쇼핑을 즐긴다. 더운 시간은 실내에서 보낸다.";
+  cafe.t="16:30~17:00 전후";cafe.compact.summary="Grand Front Osaka에서 카페·디저트 휴식.";cafe.detail.intro="Grand Front Osaka 구경 후 커피와 오늘의 디저트로 짧게 쉰다.";
+  const dinner={t:"17:30~19:00 전후",title:"야키니쿠 에비스 우메다점",cat:"일정",compact:{summary:"카드 결제 가능한 야키니쿠 저녁."},detail:{intro:"THE CITY BAKERY에서 오사카역·우메다역 지하통로를 따라 Whity Umeda 방향으로 이동한다. 지상 이동은 최소화하고 13번 출구 인근에서 올라와 매장으로 이동.",primary:["가능한 구간은 오사카역·우메다역 지하통로 → Whity Umeda 방향 이용","13번 출구 인근에서 지상 이동","VISA · Mastercard · JCB 등 카드 사용 가능","QR결제보다 실물 카드 결제를 우선 권장"],recommendation:[],info:[],costLine:"",reserveNote:"",alternative:""},place:ebisu,route:{url:ebisu.directions,note:"THE CITY BAKERY → 오사카역·우메다역 지하통로 → Whity Umeda 방향 → 13번 출구 인근",steps:["지하통로 중심으로 이동해 폭염과 지상 보행 최소화","Whity Umeda 방향 표지판 확인","13번 출구 인근에서 지상으로 올라와 매장 이동"]}};
+  free.t="19:30 이후";free.title="자유시간";free.compact.summary="우메다·난바·숙소 주변 중 현장에서 선택.";free.detail={intro:"식사 후 장소를 고정하지 않고 현장 컨디션과 날씨에 맞춰 선택한다.",primary:["우메다 추가 쇼핑","한큐 그랜드빌딩 31층 무료 전망 · 선택 팁이며 필수 일정 아님","난바·닛폰바시 복귀","숙소 주변 이자카야 방문"],recommendation:[],info:[],costLine:"",reserveNote:"",alternative:""};free.place=null;free.route=null;
+  day3.stops.splice(7,5,cafe,dinner,free);
+})();
