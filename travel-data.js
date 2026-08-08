@@ -54,3 +54,28 @@
   };
   Object.entries(excelDetails).forEach(([day,details])=>window.TRAVEL_GUIDE.days[day].stops.forEach((stop,index)=>{const full=details[index];if(!full)return;stop.detail.intro=full;}));
 })();
+/* Day 2 rainy-day Plan B. Kept separate from the confirmed Kyoto timetable. */
+(()=>{
+  const guide=window.TRAVEL_GUIDE;
+  if(!guide)return;
+  const maps=(name,nameJa,searchName,address,note="")=>{const query=encodeURIComponent(searchName);return{name:`${name} — ${nameJa} · ${searchName}`,status:"rain_plan",search:`https://www.google.com/maps/search/?api=1&query=${query}`,directions:`https://www.google.com/maps/dir/?api=1&destination=${query}`,note:`${address}${note?` · ${note}`:""}`}};
+  const route=(destination,note,steps=[])=>({url:`https://www.google.com/maps/dir/?api=1&origin=HOTEL%20ASIATO%20Namba%2C%20Osaka&destination=${encodeURIComponent(destination)}&travelmode=transit`,note,steps});
+  const stop=(t,title,intro,place=null,travel=null,extra={})=>({t,title,cat:extra.cat||"우천 플랜",compact:{summary:intro},detail:{intro,primary:extra.tips||[],recommendation:[],info:extra.info||[],costLine:"",reserveNote:extra.caution||"",alternative:extra.alternative||""},place,route:travel});
+  const hotel=maps("HOTEL ASIATO Namba","","HOTEL ASIATO Namba","2-10-2 Nipponbashi, Chuo Ward, Osaka, 542-0073, Japan");
+  const kaiyukan=maps("가이유칸","海遊館","Osaka Aquarium Kaiyukan","1-1-10 Kaigandori, Minato Ward, Osaka, 552-0022, Japan");
+  const tempozan=maps("텐포잔 마켓플레이스","天保山マーケットプレース","Tempozan Marketplace","1-1-10 Kaigandori, Minato Ward, Osaka, 552-0022, Japan");
+  const solaniwa=maps("소라니와 온천","空庭温泉 OSAKA BAY TOWER","Solaniwa Onsen OSAKA BAY TOWER","1-2-3 Benten, Minato Ward, Osaka, 552-0007, Japan");
+  const hips=maps("namBa HIPS","namBa HIPS","namBa HIPS","1-8-16 Namba, Chuo Ward, Osaka, 542-0076, Japan","빠칭코 체험");
+  guide.rainPlan={theme:"우천 플랜 B",stops:[
+    stop("09:00 전후","호텔 출발 → 가이유칸","난바역에서 Osaka Metro를 이용해 가이유칸으로 이동.",hotel,route("Osaka Aquarium Kaiyukan","난바역 → 미도스지선 → 혼마치역 환승 → 주오선 오사카코역",["오사카코역 1번 출구 이용","가이유칸까지 도보 약 5분","실제 열차 시간과 최적 경로는 당일 Google Maps 사용"]),{cat:"이동"}),
+    stop("10:00~13:00","가이유칸","폭우에도 진행 가능한 실내 메인 관광지. 메인 수조 중심으로 천천히 관람.",kaiyukan,null,{tips:["예상 체류 약 2시간 30분~3시간","당일 입장권·지정시간이 필요하면 실제 방문 전 확인","혼잡하면 관람 시간이 길어질 수 있음"]}),
+    stop("13:00~14:00","텐포잔 마켓플레이스 점심","가이유칸 인접 실내 공간에서 당일 원하는 메뉴를 선택.",tempozan,null,{tips:["폭우 상황에서 외부 이동 최소화","가이유칸 직후 식사와 휴식"]}),
+    stop("14:00 전후","가이유칸 → 소라니와 온천","오사카코역에서 주오선으로 벤텐초역까지 환승 없이 이동.",null,{url:"https://www.google.com/maps/dir/?api=1&origin=Osakako%20Station&destination=Solaniwa%20Onsen%20OSAKA%20BAY%20TOWER&travelmode=transit",note:"오사카코역 → 주오선 → 벤텐초역",steps:["환승 없음","벤텐초역 서쪽 개찰구 → 2-A 출구","Osaka Bay Tower 연결통로 이용"]},{cat:"이동",tips:["폭우 날 외부 보행을 최소화할 수 있는 연결통로 이용"]}),
+    stop("14:30~17:00 전후","소라니와 온천","관광 중 휴식과 일본식 대욕탕 체험.",solaniwa,null,{tips:["2~2.5시간을 기본 체류 시간으로 사용","유카타·목욕타월·페이스타월·기본 목욕용품 포함 안내","입장 → 유카타 → 대욕장 → 휴식 → 퇴장 순서 추천"],caution:"당일 운영·입장 가능 여부는 방문 전 확인."}),
+    stop("17:00~18:00 전후","소라니와 온천 → 난바","벤텐초에서 난바 방향으로 복귀.",null,{url:"https://www.google.com/maps/dir/?api=1&origin=Solaniwa%20Onsen%20OSAKA%20BAY%20TOWER&destination=Namba%20Station&travelmode=transit",note:"벤텐초 → 난바",steps:["약 20~30분 예상","당일 Google Maps 경로 이용"]},{cat:"이동"}),
+    stop("18:00 전후","namBa HIPS 빠칭코 체험","일본 빠칭코 문화를 짧게 체험하는 선택 일정.",hips,null,{tips:["30~45분만 이용","1인 최대 ¥2,000 · 추가 충전하지 않기","흥미가 없거나 혼잡하면 바로 생략"]}),
+    stop("18:30 이후","난바 · 센니치마에 · 도톤보리 저녁","당일 원하는 식당을 선택하고 호텔 방향으로 자연스럽게 복귀.",hotel,null,{tips:["빠칭코 → 저녁 → 호텔 순서","비가 약하면 짧게 산책, 폭우면 바로 호텔 복귀"]})
+  ]};
+  const rapid=guide.days["1일차"].stops[2];
+  rapid.t="12:35";rapid.compact.summary="난카이 라피트 12:35 출발. 1호차 지정석·QR 전자티켓 이용.";rapid.detail.intro="간사이공항역에서 12:35 난카이 라피트 탑승. 1호차 지정석이며 Trip.com / Linktivity QR 전자티켓은 2명 각각 사용. QR의 Use 버튼은 개찰구 앞에서 활성화.";rapid.detail.primary=["1호차 지정석","QR은 개찰구 앞에서 Use 활성화","2명 각각 별도 QR 전자티켓 사용"];
+})();
