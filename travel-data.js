@@ -54,6 +54,25 @@
   };
   Object.entries(excelDetails).forEach(([day,details])=>window.TRAVEL_GUIDE.days[day].stops.forEach((stop,index)=>{const full=details[index];if(!full)return;stop.detail.intro=full;}));
 })();
+/* Optional recommendations: never inserted into the confirmed itinerary. */
+(()=>{
+  const guide=window.TRAVEL_GUIDE;if(!guide)return;
+  const place=(id,name,nameJa,searchName,address,category,priority,area,stay,recommendWhen,note,foodType="")=>({id,name,nameJa,searchName,address,category,priority,area,stay,recommendWhen,note,foodType,search:`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(searchName)}`,directions:`https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(searchName)}`});
+  guide.recommendedPlaces=[
+    place("extra-kouzu-gu","고즈구","高津宮","Kouzu Gu Shrine Osaka","1-1-29 Kozu, Chuo Ward, Osaka, Japan","관광·구경","A","숙소·닛폰바시","20~30분","Day 1 여유시간 또는 Day 4 아침","숙소권에서 짧게 들르기 좋은 조용한 신사. 더우면 무리해서 갈 필요 없음."),
+    place("extra-kenninji","겐닌지","建仁寺","Kennin-ji Temple Kyoto","584 Komatsucho, Higashiyama Ward, Kyoto, Japan","관광·구경","A","교토·기온","30~45분","Day 2 기온 산책 중","기온 일정에 자연스럽게 추가할 수 있는 조용한 사찰. 일정이 빠르면 경내만 짧게."),
+    place("extra-nakazakicho","나카자키초","中崎町","Nakazakicho Osaka","Nakazaki, Kita Ward, Osaka, Japan","관광·구경","A","우메다","30~60분","Day 3 쇼핑이 지겨울 때 교체","낡은 골목·작은 카페·빈티지 숍. 폭염이면 실내 우메다 일정 우선."),
+    place("extra-hozenji-yokocho","호젠지 요코초","法善寺横丁","Hozenji Yokocho Osaka","1 Chome Namba, Chuo Ward, Osaka, Japan","관광·구경","B","난바","15~25분","Day 1 도톤보리 전후 또는 밤","도톤보리 바로 옆 골목. 멀리 우회하지 않고 짧게 분위기 보기 좋음."),
+    place("extra-denden-town","덴덴타운","日本橋でんでんタウン","Nipponbashi Denden Town Osaka","Nipponbashi, Naniwa Ward, Osaka, Japan","관광·구경","B","숙소·닛폰바시","30~60분","Day 1 또는 Day 4 남는 시간","게임·피규어·전자제품 구경. 숙소와 가까워 즉흥적으로 들르기 좋음."),
+    place("extra-yasui-konpiragu","야스이 곤피라구","安井金比羅宮","Yasui Konpiragu Shrine Kyoto","70 Shimobentencho, Higashiyama Ward, Kyoto, Japan","관광·구경","B","교토·기온","15~20분","Day 2 산넨자카~기온 이동 중","인연 끊기·맺기로 알려진 작은 신사. 일정이 밀리면 생략."),
+    place("extra-hankyu-31f","한큐 그랜드빌딩 31층","阪急グランドビル","Hankyu Grand Building","8-47 Kakudacho, Kita Ward, Osaka, Japan","관광·구경","A","우메다","15~30분","Day 3 저녁 이후 자유시간","입장료 없이 선택 가능한 무료 전망 팁. 필수 일정 아님."),
+    place("extra-zanza","Zanza","Zanza","Zanza Osaka Nipponbashi","1-20-9 Nipponbashi, Chuo Ward, Osaka, Japan","먹거리·이자카야","A","숙소 주변","45~75분","Day 2 또는 Day 3 밤","소규모 로컬 야키토리·쿠시야키. 현금 사용 가능성을 염두에 두고 방문 전 확인.","야키토리·쿠시야키"),
+    place("extra-hotaru","사케도코로 호타루","酒処 螢","Sakedokoro Hotaru Namba Sennichimae","3-22 Namba Sennichimae, Chuo Ward, Osaka, Japan","먹거리·이자카야","B","숙소 주변","60~90분","히데조 만석 시 대체","해산물·오반자이 계열 대안. 방문일 영업 여부는 지도에서 확인.","해산물·오반자이"),
+    place("extra-gyukatsu-motomura","규카츠 모토무라 난바점","牛かつもと村","Gyukatsu Motomura Namba","3-3-1 Namba, Chuo Ward, Osaka, Japan","먹거리·이자카야","B","난바","40~60분","규카츠가 먹고 싶고 대기가 짧을 때","대기가 길면 기다리지 말고 다른 후보를 선택.","규카츠"),
+    place("extra-yamakazu-unagi","지야키 우나기 호젠지 야마카즈","地焼きうなぎ 法善寺 山かづ","Jiyaki Unagi Hozenji Yamakazu Osaka","Hozenji / Namba, Chuo Ward, Osaka, Japan","먹거리·이자카야","B","난바","60~90분","기존 저녁을 장어로 바꾸고 싶을 때","간식·2차가 아닌 정식 저녁 교체용 후보.","장어"),
+    place("extra-rekishi-wo-kizame","라멘 소우 레키시오 키자메","ラーメン荘 歴史を刻め","Ramen Sou Rekishi wo Kizame Osaka Nipponbashi","5-14-20 Nipponbashi, Naniwa Ward, Osaka, Japan","먹거리·이자카야","C","숙소 주변","40~70분","라멘이 확실히 먹고 싶을 때","진한 지로계 라멘. 대기 20~30분 이상이면 다른 곳으로 전환.","라멘")
+  ];
+})();
 /* Day 2 rainy-day Plan B. Kept separate from the confirmed Kyoto timetable. */
 (()=>{
   const guide=window.TRAVEL_GUIDE;
