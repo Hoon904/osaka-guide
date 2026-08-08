@@ -1,4 +1,4 @@
-const CACHE = "osaka-guide-v9";
+const CACHE = "osaka-guide-v10";
 const ASSETS = [
   "./",
   "./오사카_모바일가이드.html",
